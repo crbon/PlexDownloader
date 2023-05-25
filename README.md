@@ -1,116 +1,107 @@
-PlexDownloader
-==============
-Configuring PlexDownloader:
+# Configuring PlexDownloader:
 
-1)Edit the user.ini with information that is relevant to your install.
+To configure PlexDownloader, follow these steps:
 
-2)If you are downloading/syncing remotely you must enter your myplex information and enable myplex.
+1. Edit the `user.ini` file with information relevant to your installation.
 
-3)Start by running "python plexdl.py".
+2. If you are downloading or syncing remotely, you must enter your MyPlex information and enable MyPlex.
 
-You can find your movie/music/tv/photo section ID by visiting your Plex Web and going to the category you want to sync.
+3. Start by running the command: `python plexdl.py`.
 
-http://192.168.3.5/web/index.html#!/server/.../section/2
+To find your movie/music/tv/photo section ID, follow these instructions:
 
-The ID you are looking for is the number at the end which in the above example is 2.
+- Visit your Plex Web and navigate to the category you want to sync. For example: [http://192.168.3.5/web/index.html#!/server/.../section/2](http://192.168.3.5/web/index.html#!/server/.../section/2)
+- The ID you need is the number at the end of the URL, such as `2`.
+- Alternatively, you can find your content section ID by visiting [http://localhost:32400/library/sections/](http://localhost:32400/library/sections/).
 
-You can also find your content section ID by visiting:
-http://localhost:32400/library/sections/
+## User.Ini Options
 
+The `user.ini` file contains the following options:
 
-[User.Ini Options]
+**[general]**
 
-[general]
+- `sleeptime`: Time in seconds that you want to wait between checking for new content. The default is 600 seconds (10 minutes).
+- `plexurl`: Enter your IP here, making sure there is no "/" at the end of the IP. For example: `http://127.0.0.1:32400`
 
-sleeptime = time in seconds that you want to wait between checking for new content. Default is 600 seconds (10 minutes).
+**[webui]**
 
-plexurl = enter your IP here make sure to have no "/" at the end of the ip. For example http://127.0.0.1:32400
+- `status`: Enable or disable the web manager for sync items.
+- `port`: Port number for the web manager. The default is `8585`, but you can change it to any port you prefer.
 
-[webui]
+**[myplex]**
 
-status=enable|disable (web manager for sync items)
+- `status`: Enable or disable MyPlex. The default is `disable`.
+- `username`: Your MyPlex email.
+- `password`: Your MyPlex password.
 
-port=8585 (default is 8585 but you can change to whatever port you want)
+**[tvshows]**
 
-[myplex]
+- `active`: Enable or disable the TV shows category.
+- `plexid`: Your TV show section Plex ID.
+- `tvfile`: List of TV shows you want to sync. Each TV show should be on a separate line, matching the name as it appears in Plex.
+- `tvtype`: Specify the type of TV show syncing: `episode`, `recent`, or `all`. Selecting `recent` will download the most current season, while `all` will download every season.
+- `tvlocation`: Download location for your synced TV shows. For example: `/Users/plexdl/Downloads/TV Shows/`.
+- `fullsync`: Enable or disable full sync. When enabled, it will download everything it finds, following the `tvtype` setting.
+- `autodelete`: Enable or disable automatic deletion of old episodes.
+- `folderstructure`: Specify the folder structure for TV shows. Choose between `default` or `server`. The `server` option uses the Plex server naming convention, such as `/Season X/Show s1e1 - desc.mkv`.
 
-status=disable|enable (default is disable)
+**[movies]**
 
-username=user@email.com (your myplex email)
+- `active`: Enable or disable the movies category.
+- `plexid`: Your movie section Plex ID.
+- `moviefile`: List of wanted movies you want to sync. Each movie should be on a separate line, formatted as `Movie (year)`. For example: `Avatar (2009)`.
+- `movielocation`: Download location for your synced movies. For example: `/Users/plexdl/Downloads/Movies/`.
+- `fullsync`: Enable or disable full sync. When enabled, it will download everything it finds.
 
-password=password (your myplex password)
+**[music]**
 
-[tvshows]
+- `active`: Enable or disable the music category.
+- `plexid`: Your music section Plex ID.
+- `musicfile`: List of wanted music. Include only artists, with one artist per line in the file.
 
-active = enable|disable (Activates the category so it will be scanned)
+- `musiclocation`: Download location for your synced music files. For example: `/Users/plexdl/Downloads/Music/`.
 
-plexid = 4 (your tv show section plex id)
+- `fullsync`: Enable or disable full sync. When enabled, it will download everything it finds.
 
-tvfile = tvshows.txt (this is the list of the tv show you want to sync. one tv show per line. Enter exactly how you see it in plex.)
+**[pictures]**
 
-tvtype = episode|recent|all (recent will download on the most current season. all will download every season)
+- `active`: Enable or disable the pictures category.
 
-tvlocation = /Users/plexdl/Downloads/TV Shows/ (download location for your synced tvshows EX: C:/Downloads/TV Shows/)
+- `plexid`: Your pictures section Plex ID.
 
-fullsync = enable|disable [Will download everything it finds, will follow tvtype so you can sync the most recent of every show]
+- `picturefile`: List of wanted pictures. Include only albums, with one album per line in the file.
 
-autodelete = enable|disable [Will automatically delete old episodes]
+- `picturelocation`: Download location for your synced pictures. For example: `/Users/plexdl/Downloads/Pictures/`.
 
-folderstructure = default|server [server uses plex server naming convention - /Season X/Show s1e1 - desc.mkv]
+- `fullsync`: Enable or disable full sync. When enabled, it will download everything it finds.
 
-[movies]
+**EXAMPLES:**
 
-active = enable|disable (Activates the category so it will be scanned)
+Here are some examples of how to format the text files for different categories:
 
-plexid = 5 (your movie section plex id)
+**[tvshows.txt]**
 
-moviefile = movies.txt (this is the list of wanted movies you want to sync. One movie per line. Format: Movie (year) EX: Avatar (2009)
-
-movielocation = /Users/plexdl/Downloads/Movies/ (download location for your synced movies. EX: C:/Downloads/Movies/)
-
-fullsync = enable|disable (Will download everything it finds)
-
-
-[music]
-
-active = enable|disable (Activates the category so it will be scanned)
-
-plexid = 6 (your music section plex id)
-
-musicfile = music.txt (your wanted list of music. Include only artists one per line.)
-
-musiclocation = /Users/plexdl/Downloads/Music/ (download location for your synced music)
-
-fullsync = enable|disable (will download everything it finds)
-
-[pictures]
-
-active = enable|disable (Activates the category so it will be scanned)
-
-plexid = 7 (your pictures section plex id)
-
-picturefile = pictures.txt (your wanted list of pictures. Include only albums one per line.)
-
-picturelocation = /Users/plexdl/Downloads/Pictures/ (download location for your synced pictures)
-
-fullsync = enable|disable (will download everything it finds)
-
-EXAMPLES:
-
-[tvshows.txt]
-
+```
 Warehouse 13
-
 Eureka
+```
 
-[movies.txt]
+**[movies.txt]**
 
+```
 Avatar (2009)
+```
 
-[music.txt]
+**[music.txt]**
 
+```
 The Beatles
+```
 
-[pictures.txt]
+**[pictures.txt]**
 
+```
 Family Trip To France
+```
+
+Make sure to save the `user.ini` file with your desired configurations before running the PlexDownloader.
